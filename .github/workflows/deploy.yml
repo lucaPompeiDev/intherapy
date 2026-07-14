@@ -1,94 +1,20 @@
-# Anteprima per il cliente su GitHub Pages.
-#
-# Va messo nel repo in:  .github/workflows/deploy-anteprima.yml
-#
-# ⚠️ PRIMA DI USARLO, LEGGI:
-#
-# 1. Su GitHub: Settings -> Pages -> Source -> scegli "GitHub Actions".
-#    Se resta su "Deploy from a branch" questo workflow non pubblica nulla.
-#
-# 2. Il workflow Flutter che hai già (.github/workflows/deploy.yml, quello
-#    con bluefireteam/flutter-gh-pages e baseHref: /intherapy/) pubblica
-#    sullo stesso sito Pages spingendo sul branch gh-pages. I due si
-#    sovrascrivono a vicenda: vince l'ultimo che gira.
-#    Disattiva o cancella quello prima di attivare questo.
-#
-# 3. Questo workflow presume che il sito statico stia in una cartella `site/`
-#    alla radice del repo. Se la chiami diversamente, cambia SITE_DIR qui sotto.
-
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch: # per lanciarlo a mano dalla tab Actions
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Se fai due push ravvicinati, lascia finire il primo invece di annullarlo:
-# così l'anteprima non resta mai a metà mentre il cliente la sta guardando.
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
-env:
-  SITE_DIR: site
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
+    permissions:
+      contents: write
     steps:
-      - name: Scarica il repo
-        uses: actions/checkout@v6
-
-      - name: Prepara la cartella da pubblicare
-        run: |
-          cp -r "$SITE_DIR" _anteprima
-          # Senza questo file GitHub passa il sito attraverso Jekyll, che
-          # ignora le cartelle che iniziano con _ e rallenta il deploy.
-          touch _anteprima/.nojekyll
-
-      # ────────────────────────────────────────────────────────────────
-      # Il pezzo che conta.
-      #
-      # È un'ANTEPRIMA, non il sito vero. Se Google la indicizza:
-      #   - i nomi placeholder (Elena Bianchi, Marco Rossi, "Massaggio
-      #     Rilassante") finiscono nei risultati associati allo studio;
-      #   - quando il sito vero andrà online sul dominio, si ritroverà a
-      #     competere con la propria copia su github.io -> contenuti
-      #     duplicati, e il danno è proprio sul SEO che vogliamo salvare.
-      #
-      # Il blocco viene iniettato QUI, non nei file sorgente: il codice nel
-      # repo resta pronto per la produzione, senza noindex da ricordarsi
-      # di togliere il giorno del lancio.
-      # ────────────────────────────────────────────────────────────────
-      - name: Blocca l'indicizzazione dell'anteprima
-        run: |
-          for f in _anteprima/*.html; do
-            sed -i '0,/<head>/s||<head>\n  <meta name="robots" content="noindex, nofollow">|' "$f"
-          done
-          printf 'User-agent: *\nDisallow: /\n' > _anteprima/robots.txt
-          rm -f _anteprima/sitemap.xml
-
-          echo "Verifica:"
-          grep -c 'name="robots" content="noindex' _anteprima/*.html
-          cat _anteprima/robots.txt
-
-      - name: Configura Pages
-        uses: actions/configure-pages@v5
-
-      - name: Carica il sito
-        uses: actions/upload-pages-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
-          path: _anteprima
-
-      - name: Pubblica
-        id: deployment
-        uses: actions/deploy-pages@v4
+          channel: stable
+      - uses: bluefireteam/flutter-gh-pages@v9
+        with:
+          baseHref: /intherapy/
