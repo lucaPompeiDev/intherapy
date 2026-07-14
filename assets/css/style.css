@@ -1,0 +1,1038 @@
+/* ============================================================
+   Poppins ospitato in locale (@fontsource/poppins, licenza OFL).
+
+   Prima arrivava da fonts.googleapis.com con un <link> render-blocking.
+   Due problemi: (1) se quella richiesta tardava, la pagina di destinazione
+   non era renderizzabile entro i 4 secondi di budget delle view transition
+   e la transizione moriva -> la pillola saltava "ogni tanto";
+   (2) il CDN di Google riceve l'IP di ogni visitatore, che su un sito
+   sanitario europeo con iubenda è una grana in più da non avere.
+
+   font-display: swap -> il testo è leggibile subito, mai invisibile.
+   ============================================================ */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/poppins-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/poppins-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/poppins-latin-700-normal.woff2") format("woff2");
+}
+
+/* ============================================================
+   Studio Colantoni — stylesheet
+   Token portati 1:1 da lib/theme/app_theme.dart e
+   lib/widgets/responsive.dart del progetto Flutter.
+   ============================================================ */
+
+/* ---------- Token: colori (AppColors) ---------- */
+:root {
+  --white: #ffffff;
+  --primary: #995565;          /* Color.fromRGBO(153, 85, 101, 1) */
+  --secondary: #f8e6a4;        /* Color.fromRGBO(248, 230, 164, 1) */
+  --primary-dark: #7a4350;
+  --primary-light: #b98a97;
+  --secondary-soft: #fbf1d8;
+  --text-dark: #3a2a2e;
+  --text-body: rgba(58, 42, 46, 0.8);   /* textDark.withOpacity(0.8) */
+
+  /* ---------- Token: raggi (AppRadius) ---------- */
+  --r-xl: 40px;
+  --r-lg: 32px;
+  --r-md: 24px;
+  --r-sm: 16px;
+
+  /* ---------- Ombre ---------- */
+  --shadow-card: 0 12px 24px rgba(153, 85, 101, 0.10);
+  --shadow-photo: 0 10px 20px rgba(153, 85, 101, 0.15);
+
+  /* ---------- Movimento ----------
+     cubic-bezier(0.4, 0, 0.2, 1) è Curves.fastOutSlowIn, la stessa
+     curva che Flutter usa di default per AnimatedContainer e Drawer. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-page: 280ms;
+  --dur-ui: 200ms;
+
+  /* ---------- Layout (pageHorizontalPadding / gridColumns) ---------- */
+  --hpad: 80px;
+  --grid-cols: 4;
+  --team-ratio: 0.72;      /* cardAspectRatio(4, single: 1.05) */
+  --therapy-ratio: 0.59;   /* cardAspectRatio(4, single: 0.92) */
+  --display-size: 40px;
+}
+
+/* Breakpoints.desktop = 1280 */
+@media (max-width: 1279.98px) {
+  :root {
+    --grid-cols: 3;
+    --team-ratio: 0.77;
+    --therapy-ratio: 0.64;
+  }
+}
+
+/* Breakpoints.tablet = 1000 */
+@media (max-width: 999.98px) {
+  :root {
+    --hpad: 40px;
+    --grid-cols: 2;
+    --team-ratio: 0.90;
+    --therapy-ratio: 0.77;
+  }
+}
+
+/* Breakpoints.mobile = 700 */
+@media (max-width: 699.98px) {
+  :root {
+    --hpad: 20px;
+    --grid-cols: 1;
+    --team-ratio: 1.05;
+    --therapy-ratio: 0.92;
+    --display-size: 30px;
+  }
+}
+
+/* ---------- Reset minimo ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Ereditata da tutti i discendenti: toglie il flash blu/grigio al tap
+     su ogni elemento, .menu-btn e logo compresi. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--text-dark);
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Le icone sono SVG inline (sprite in cima al <body>), non un font.
+   Il font-icona costringeva a scaricare un file render-blocking, lasciava
+   le legature ("spa", "home") come testo nel DOM, e cambiava la larghezza
+   degli elementi quando arrivava: è quello che faceva saltare la pillola.
+   font-size continua a controllare la dimensione, come con il font. */
+.sprite {
+  display: none;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  font-size: 24px;
+  fill: currentColor;
+  flex-shrink: 0;
+  /* Material Symbols disegna su una griglia -960 960: l'icona è già
+     allineata alla baseline del testo che le sta accanto. */
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+/* ---------- Tipografia (textTheme) ---------- */
+.display-sm {
+  font-size: var(--display-size);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.headline-md {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.title-lg {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.body-md {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-body);
+  margin: 0;
+}
+
+/* ---------- Accessibilità ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   Bottoni (elevatedButtonTheme + OutlinedButton)
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 32px;
+  border: 0;
+  border-radius: var(--r-lg);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--dur-ui) var(--ease);
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn--secondary {
+  background: var(--secondary);
+  color: var(--text-dark);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.btn--outline-sm {
+  padding: 16px 28px;
+}
+
+/* Gli stati hover valgono solo per i puntatori che ce l'hanno davvero.
+   Su touch il :hover scatta al tap e ci resta incollato finché non
+   tocchi altrove: è metà della sensazione di "scattoso". */
+@media (hover: hover) {
+  .btn--primary:hover {
+    background: var(--primary-dark);
+  }
+
+  .btn--secondary:hover {
+    background: #f2d98a;
+  }
+
+  .btn--outline:hover {
+    background: rgba(153, 85, 101, 0.06);
+  }
+}
+
+/* ============================================================
+   RoundedCard / RoundedPill / RoundedPhoto
+   ============================================================ */
+.card {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.card--flat {
+  box-shadow: none;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--text-dark);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.pill .icon {
+  font-size: 16px;
+}
+
+.pill--primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* Cornice colorata attorno alla foto (padding = borderWidth) */
+.photo {
+  background: var(--secondary);
+  padding: 6px;
+  border-radius: calc(var(--r-lg) + 6px);
+  box-shadow: var(--shadow-photo);
+  overflow: hidden;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--r-lg);
+  background: var(--secondary-soft);
+}
+
+.photo--xl {
+  border-radius: calc(var(--r-xl) + 6px);
+}
+
+.photo--xl img {
+  border-radius: var(--r-xl);
+}
+
+.photo--md {
+  padding: 4px;
+  border-radius: calc(var(--r-md) + 4px);
+}
+
+.photo--md img {
+  border-radius: var(--r-md);
+}
+
+.photo--circle {
+  padding: 5px;
+  border-radius: 999px;
+}
+
+.photo--circle img {
+  border-radius: 999px;
+}
+
+/* ============================================================
+   Navbar (TopNavBar)
+   ============================================================ */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px var(--hpad) 8px;
+  background: var(--white);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand__mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--primary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.brand__mark .icon {
+  font-size: 22px;
+  color: var(--white);
+}
+
+.brand__name {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text-dark);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Barra di navigazione (desktop / tablet) ──────────────────
+   Sottolineatura, non più una pillola che si sposta.
+
+   Il motivo è strutturale: la voce attiva cambia durante un CARICAMENTO
+   DI PAGINA. Per animare quel cambiamento serve una view transition, che
+   dipende dal browser e da un budget di 4 secondi: quando non ce la fa,
+   salta. Qui non c'è nulla da animare fra una pagina e l'altra — lo stato
+   attivo è già corretto al primo frame dipinto, ovunque.
+
+   Il movimento resta dove può essere sempre fluido: l'hover, che avviene
+   dentro la stessa pagina.
+   ------------------------------------------------------------ */
+.nav {
+  display: flex;
+  gap: 4px;
+}
+
+.nav__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px 16px;
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur-ui) var(--ease);
+}
+
+.nav__item .icon {
+  font-size: 18px;
+  color: var(--primary-light);
+  transition: color var(--dur-ui) var(--ease);
+}
+
+/* La sottolineatura è in position:absolute: attiva o no, la geometria
+   della voce non cambia di un pixel. Niente scarti di layout. */
+.nav__item::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 6px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--dur-ui) var(--ease),
+    background-color var(--dur-ui) var(--ease);
+}
+
+.nav__item[aria-current="page"] {
+  color: var(--primary);
+}
+
+.nav__item[aria-current="page"] .icon {
+  color: var(--primary);
+}
+
+/* Le transition non partono sullo stato iniziale: al caricamento la
+   sottolineatura è già lì, ferma, senza animazione da perdere. */
+.nav__item[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) {
+  .nav__item:hover {
+    color: var(--primary);
+  }
+
+  .nav__item:hover .icon {
+    color: var(--primary);
+  }
+
+  /* Giallo in hover, bordeaux quando è la pagina corrente: gli stessi due
+     colori delle cornici delle foto. */
+  .nav__item:hover::after {
+    transform: scaleX(1);
+    background: var(--secondary);
+  }
+
+  .nav__item[aria-current="page"]:hover::after {
+    background: var(--primary);
+  }
+}
+
+/* Pulsante menu (mobile) */
+.menu-btn {
+  display: none;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--white);
+  cursor: pointer;
+  place-items: center;
+}
+
+.menu-btn .icon {
+  font-size: 24px;
+}
+
+/* ---------- Drawer (AppEndDrawer) ---------- */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-page) var(--ease),
+    visibility var(--dur-page) var(--ease);
+  z-index: 40;
+  touch-action: none;
+}
+
+.scrim.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(304px, 85vw);
+  padding: 24px;
+  background: var(--white);
+  border-radius: 32px 0 0 32px;
+  /* translate3d forza il compositing sulla GPU: il pannello scorre
+     senza far ridisegnare la pagina sotto. */
+  transform: translate3d(100%, 0, 0);
+  transition: transform var(--dur-page) var(--ease);
+  z-index: 50;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.drawer.is-open {
+  transform: translate3d(0, 0, 0);
+}
+
+.drawer .brand {
+  flex: none;
+}
+
+.drawer__list {
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drawer__list li {
+  margin-bottom: 12px;
+}
+
+.drawer__item {
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--r-md);
+  background: var(--secondary-soft);
+  color: var(--text-dark);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.drawer__item .icon {
+  color: var(--primary);
+}
+
+.drawer__item[aria-current="page"] {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.drawer__item[aria-current="page"] .icon {
+  color: var(--white);
+}
+
+@media (max-width: 699.98px) {
+  .nav {
+    display: none;
+  }
+
+  .menu-btn {
+    display: grid;
+  }
+
+  .brand__name {
+    font-size: 15px;
+  }
+}
+
+/* ============================================================
+   Struttura pagina
+   ============================================================ */
+.page {
+  padding: 32px var(--hpad);
+}
+
+/* ============================================================
+   Cambio pagina (View Transitions API)
+
+   Solo una dissolvenza fra la pagina vecchia e la nuova. NON c'è più
+   nessun view-transition-name condiviso: era la pillola che scivolava,
+   ed era la parte fragile. Un elemento condiviso deve essere fotografato
+   su entrambe le pagine e ritrovato identico; se la transizione non parte
+   in tempo, salta di colpo.
+
+   Una dissolvenza non ha questo problema: se non parte, la pagina cambia
+   e basta. Assente, non scattosa.
+
+   Vuoi toglierla del tutto? Cancella il blocco @view-transition qui sotto:
+   il sito continua a funzionare identico, senza animazione.
+   ============================================================ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-page);
+  animation-timing-function: var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.hero__text {
+  flex: 6;
+  min-width: 0;
+}
+
+.hero__media {
+  flex: 5;
+  max-width: 420px;
+}
+
+.hero__media .photo {
+  aspect-ratio: 1;
+}
+
+.hero__title {
+  margin: 20px 0 16px;
+}
+
+.hero__lead {
+  max-width: 480px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+@media (max-width: 699.98px) {
+  .hero {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+  }
+
+  .hero__media {
+    flex: none;
+    width: 260px;
+    max-width: 260px;
+  }
+
+  .hero__lead {
+    max-width: none;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+}
+
+/* ---------- Striscia "about" (_AboutStrip) ---------- */
+.about {
+  margin-top: 64px;
+  background: var(--secondary-soft);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  border-radius: var(--r-lg);
+  display: flex;
+  align-items: flex-start;
+}
+
+.about__item {
+  flex: 1;
+  padding: 0 12px;
+  text-align: center;
+}
+
+.about__icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  background: var(--primary);
+  display: grid;
+  place-items: center;
+}
+
+.about__icon .icon {
+  font-size: 24px;
+  color: var(--white);
+}
+
+.about__label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+@media (max-width: 699.98px) {
+  .about {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about__item {
+    flex: none;
+    align-self: stretch;
+    padding: 12px 0;
+  }
+}
+
+/* ---------- Sezioni di anteprima (_PreviewSection) ---------- */
+.preview {
+  margin-top: 64px;
+  background: var(--primary);
+  border-radius: var(--r-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.preview + .preview {
+  margin-top: 40px;
+}
+
+.preview__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.preview__title {
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.preview__subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 699.98px) {
+  .preview {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+}
+
+/* ---------- Intestazione di sezione ---------- */
+.section-head {
+  text-align: center;
+}
+
+.section-head__title {
+  margin: 18px 0 12px;
+}
+
+.section-head__lead {
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+/* ---------- Griglie ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  gap: 28px;
+  margin-top: 40px;
+}
+
+/* ---------- Card team (_TeamCard) ---------- */
+.team-card {
+  aspect-ratio: var(--team-ratio);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.team-card .photo {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.team-card__name {
+  margin: 16px 0 6px;
+  font-size: 17px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.team-card__bio {
+  flex: 1;
+  margin-top: 10px;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Card terapia (_TherapyCard) ---------- */
+.therapy-card {
+  aspect-ratio: var(--therapy-ratio);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.therapy-card .photo {
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+}
+
+.therapy-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.therapy-card__badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--primary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.therapy-card__badge .icon {
+  font-size: 18px;
+  color: var(--white);
+}
+
+.therapy-card__title {
+  font-size: 16px;
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.therapy-card__desc {
+  flex: 1;
+  margin: 10px 0;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Instagram (InstagramShowcase)
+   ============================================================ */
+.instagram {
+  margin-top: 64px;
+  text-align: center;
+}
+
+.instagram__title {
+  margin: 18px 0 28px;
+}
+
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  gap: 20px;
+}
+
+.ig-card {
+  display: block;
+  border-radius: var(--r-md);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-ui) var(--ease);
+}
+
+@media (hover: hover) {
+  .ig-card:hover {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.ig-card .photo {
+  aspect-ratio: 1;
+}
+
+.instagram__cta {
+  margin-top: 28px;
+}
+
+/* Stato di caricamento */
+.spinner {
+  width: 36px;
+  height: 36px;
+  margin: 40px auto;
+  border: 3px solid rgba(153, 85, 101, 0.2);
+  border-top-color: var(--primary);
+  border-radius: 999px;
+  animation: spin 0.9s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Stato di errore */
+.ig-error {
+  background: var(--secondary-soft);
+  border-radius: var(--r-md);
+  padding: 28px;
+  box-shadow: none;
+}
+
+.ig-error .icon {
+  font-size: 32px;
+  color: var(--primary);
+}
+
+.ig-error__text {
+  margin: 12px 0 16px;
+}
+
+/* ============================================================
+   Footer (_Footer)
+   ============================================================ */
+.footer {
+  margin-top: auto;
+  background: var(--primary);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: 28px var(--hpad);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.footer__brand .icon {
+  color: var(--white);
+  font-size: 24px;
+}
+
+.footer__name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--white);
+}
+
+.footer__copy {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 699.98px) {
+  .footer {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer__brand {
+    flex: none;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Il footer resta in fondo anche con pagine corte (SliverFillRemaining) */
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout > main {
+  flex: 1;
+}
