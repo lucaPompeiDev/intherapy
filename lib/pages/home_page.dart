@@ -118,12 +118,13 @@ class _HeroSection extends StatelessWidget {
       aspectRatio: 1,
       borderRadius: AppRadius.xl,
       borderColor: AppColors.secondary,
+      size: !isMobile(context) ? 500 : 260,
     );
 
     if (mobile) {
       return Column(
         children: [
-          SizedBox(width: 260, child: photo),
+          photo,
           const SizedBox(height: 32),
           textCol,
         ],

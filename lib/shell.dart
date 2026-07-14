@@ -36,9 +36,10 @@ class _RootShellState extends State<RootShell> {
       endDrawer: isMobile(context)
           ? AppEndDrawer(currentIndex: _index, onSelect: _select)
           : null,
-      body: Column(
-        children: [
-          Expanded(
+      body:  CustomScrollView(
+        slivers: [
+          // La pagina selezionata: prende la sua altezza naturale e scorre.
+          SliverToBoxAdapter(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 250),
               child: KeyedSubtree(
@@ -47,7 +48,15 @@ class _RootShellState extends State<RootShell> {
               ),
             ),
           ),
-          const _Footer(),
+          // Il footer: sta in fondo allo schermo se la pagina è corta,
+          // altrimenti compare subito dopo il contenuto.
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: const Align(
+              alignment: Alignment.bottomCenter,
+              child: _Footer(),
+            ),
+          ),
         ],
       ),
     );
