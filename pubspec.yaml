@@ -1,0 +1,30 @@
+name: intherapy
+description: Sito vetrina Flutter per studio di terapie (Home, Team, Terapie)
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.2.1
+  build_runner: ^2.4.8
+  url_launcher: ^6.3.1
+  http: ^1.2.2
+
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/
