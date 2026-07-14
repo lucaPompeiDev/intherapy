@@ -1,20 +1,108 @@
+# Sostituisce il contenuto di .github/workflows/deploy.yml
+#
+# PERCHÉ IL DEPLOY FALLIVA (exit code 1):
+# il workflow precedente lanciava `flutter build web` tramite
+# bluefireteam/flutter-gh-pages, ma il progetto Flutter non c'è più
+# (niente pubspec.yaml, niente lib/). Non era l'avviso su Node.js 20:
+# quello è solo un warning e non fa fallire nulla.
+#
+# Qui non c'è nessuna build: il sito è già HTML, si pubblica e basta.
+#
+# ⚠️ DUE COSE DA FARE SU GITHUB, UNA VOLTA SOLA:
+#
+# 1. Settings -> Pages -> Source -> "GitHub Actions".
+#    Il workflow vecchio pubblicava spingendo sul branch gh-pages, quindi
+#    ora la voce è probabilmente su "Deploy from a branch". Se la lasci lì,
+#    questo workflow gira, diventa verde e non pubblica niente.
+#
+# 2. Cancella `deploy-anteprima.yml` dalla radice del repo: in quella
+#    posizione GitHub non lo guarda nemmeno. Il workflow è QUESTO file.
+#
+# Il sito esce su https://TUO-UTENTE.github.io/intherapy/
+
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [main]
+  workflow_dispatch: # per lanciarlo a mano dalla tab Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Se fai due push ravvicinati, lascia finire il primo invece di annullarlo:
+# così l'anteprima non resta a metà mentre il cliente la sta guardando.
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      # checkout@v6 gira su Node 24: sparisce anche l'avviso di deprecazione
+      # di Node 20 che vedevi con @v4.
+      - name: Scarica il repo
+        uses: actions/checkout@v6
+
+      # Copio SOLO ciò che è il sito, invece di copiare tutto ed escludere
+      # il resto. Con l'approccio opposto, nella cartella finiva anche
+      # .dart_tool/ — che contiene un profilo Chrome del PC di sviluppo, con
+      # dentro Cookies, Login Data e History. Oggi è gitignorato e non
+      # arriverebbe fin qui, ma una lista di esclusioni protegge solo da ciò
+      # che qualcuno si è ricordato di elencare. Questa non ha quel problema:
+      # se non è elencato, non viene pubblicato.
+      - name: Prepara la cartella da pubblicare
+        run: |
+          mkdir _anteprima
+          cp *.html manifest.json robots.txt sitemap.xml favicon.png _anteprima/
+          cp -r assets _anteprima/
+          # Senza questo, GitHub passa il sito per Jekyll: rallenta e ignora
+          # le cartelle che iniziano con _.
+          touch _anteprima/.nojekyll
+
+          echo "Verrà pubblicato:"
+          find _anteprima -type f | sort
+
+      # ────────────────────────────────────────────────────────────────
+      # È un'ANTEPRIMA, non il sito vero. Se Google la indicizza:
+      #   - i nomi placeholder (Elena Bianchi, Marco Rossi, "Massaggio
+      #     Rilassante") finiscono nei risultati associati allo studio;
+      #   - quando il sito vero andrà sul dominio, si troverà a competere
+      #     con la propria copia su github.io -> contenuti duplicati, e il
+      #     danno cade proprio sul SEO che tutto questo serviva a salvare.
+      #
+      # Il blocco è iniettato QUI, non nei file sorgente: il codice nel repo
+      # resta pronto per la produzione, senza noindex da ricordarsi di
+      # togliere il giorno del lancio.
+      #
+      # QUANDO PUBBLICHERAI SUL DOMINIO VERO: cancella questo step.
+      # ────────────────────────────────────────────────────────────────
+      - name: Blocca l'indicizzazione dell'anteprima
+        run: |
+          for f in _anteprima/*.html; do
+            sed -i '0,/<head>/s||<head>\n  <meta name="robots" content="noindex, nofollow">|' "$f"
+          done
+          printf 'User-agent: *\nDisallow: /\n' > _anteprima/robots.txt
+          rm -f _anteprima/sitemap.xml
+
+          echo "noindex per pagina (deve dire 1 su ognuna):"
+          grep -c 'name="robots" content="noindex' _anteprima/*.html
+
+      - name: Configura Pages
+        uses: actions/configure-pages@v5
+
+      - name: Carica il sito
+        uses: actions/upload-pages-artifact@v4
         with:
-          channel: stable
-      - uses: bluefireteam/flutter-gh-pages@v9
-        with:
-          baseHref: /intherapy/
+          path: _anteprima
+
+      - name: Pubblica
+        id: deployment
+        uses: actions/deploy-pages@v4
