@@ -1,5 +1,9 @@
-/* Drawer di navigazione mobile — equivalente di AppEndDrawer
-   aperto da Scaffold.of(context).openEndDrawer(). */
+/* ============================================================
+   main.js — Drawer di navigazione mobile (AppEndDrawer)
+   ------------------------------------------------------------
+   Invariato rispetto all'originale: apre/chiude il pannello
+   laterale sotto i 700px. Incluso in tutte le pagine.
+   ============================================================ */
 (function () {
   "use strict";
 

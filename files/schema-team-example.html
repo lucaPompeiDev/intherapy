@@ -1,0 +1,46 @@
+<!-- ============================================================
+     ESEMPIO: da inserire nella pagina dedicata a OGNI singola
+     professionista (titolare + ciascuna collaboratrice), es:
+     /team/nome-cognome.html
+     ============================================================ -->
+
+<!-- Nel <body>, contenuto testuale reale della pagina -->
+<article>
+  <h1>{{Nome Cognome}} - Psicologa</h1>
+  <img src="/img/team/nome-cognome.webp"
+       alt="{{Nome Cognome}}, psicologa presso {{Nome Studio}} a {{Città}}"
+       width="400" height="500">
+
+  <p>{{Breve bio: laurea, specializzazione, anni di esperienza, approccio terapeutico,
+     eventuali aree di specializzazione come età evolutiva, coppie, ansia, DCA, ecc.}}</p>
+
+  <h2>Numero di iscrizione all'Albo</h2>
+  <p>Iscritta all'Albo degli Psicologi della {{Regione}} al n. {{numero}}</p>
+</article>
+
+<!-- Schema.org Person, nel <head> o prima della chiusura </body> -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{Nome Cognome}}",
+  "jobTitle": "Psicologa Psicoterapeuta",
+  "image": "https://www.tuodominio.it/img/team/nome-cognome.webp",
+  "url": "https://www.tuodominio.it/team/nome-cognome.html",
+  "worksFor": {
+    "@type": "MedicalBusiness",
+    "name": "{{Nome Studio}}",
+    "url": "https://www.tuodominio.it/"
+  },
+  "alumniOf": "{{Università di laurea/specializzazione}}",
+  "knowsAbout": ["{{es. Terapia cognitivo-comportamentale}}", "{{es. Psicologia dell'età evolutiva}}"],
+  "hasCredential": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "Iscrizione Albo degli Psicologi",
+    "recognizedBy": {
+      "@type": "Organization",
+      "name": "Ordine degli Psicologi della {{Regione}}"
+    }
+  }
+}
+</script>

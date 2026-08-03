@@ -1,0 +1,75 @@
+<!-- ============================================================
+     ESEMPIO: pagina /faq.html
+     Le FAQ testuali + schema FAQPage sono probabilmente
+     l'elemento più utile per comparire nelle risposte di
+     Google AI Overview, Perplexity, ChatGPT, ecc.
+     ============================================================ -->
+
+<main>
+  <h1>Domande frequenti</h1>
+
+  <section>
+    <h2>Come si svolge il primo colloquio?</h2>
+    <p>Il primo colloquio con {{Nome Studio}} dura circa 50 minuti ed è un momento
+       per conoscersi e capire insieme quale percorso è più adatto alle tue esigenze...</p>
+  </section>
+
+  <section>
+    <h2>Quanto costa una seduta?</h2>
+    <p>Il costo di una seduta individuale è di {{prezzo}} euro. Per le coppie e le famiglie
+       il costo è di {{prezzo}} euro...</p>
+  </section>
+
+  <section>
+    <h2>È possibile fare sedute online?</h2>
+    <p>Sì, {{Nome Studio}} offre anche percorsi online tramite videochiamata,
+       con le stesse modalità e riservatezza di un colloquio in presenza...</p>
+  </section>
+
+  <section>
+    <h2>Che differenza c'è tra le collaboratrici e la titolare?</h2>
+    <p>{{Testo che spiega ruoli, specializzazioni diverse, come scegliere a chi rivolgersi}}</p>
+  </section>
+</main>
+
+<!-- Schema FAQPage: DEVE rispecchiare ESATTAMENTE domande e risposte visibili in pagina -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Come si svolge il primo colloquio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Il primo colloquio con {{Nome Studio}} dura circa 50 minuti ed è un momento per conoscersi e capire insieme quale percorso è più adatto alle tue esigenze."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quanto costa una seduta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Il costo di una seduta individuale è di {{prezzo}} euro. Per le coppie e le famiglie il costo è di {{prezzo}} euro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "È possibile fare sedute online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sì, {{Nome Studio}} offre anche percorsi online tramite videochiamata, con le stesse modalità e riservatezza di un colloquio in presenza."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Che differenza c'è tra le collaboratrici e la titolare?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{Testo sintetico su ruoli e specializzazioni}}"
+      }
+    }
+  ]
+}
+</script>

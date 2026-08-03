@@ -1,0 +1,94 @@
+<!-- ============================================================
+     ESEMPIO DI <head> PER LA HOMEPAGE
+     Sostituisci tutti i valori tra {{ }} con i dati reali
+     ============================================================ -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title e description: la parte più importante per il click-through da Google -->
+  <title>{{Nome Studio}} - Studio di Psicologia a {{Città}} | {{Titolare}}</title>
+  <meta name="description" content="Studio di psicologia a {{Città}} specializzato in {{es. terapia individuale, di coppia, età evolutiva}}. Prenota un colloquio con {{Titolare}} e il team di collaboratrici.">
+
+  <!-- Canonical: evita contenuti duplicati -->
+  <link rel="canonical" href="https://www.tuodominio.it/">
+
+  <!-- Lingua e area geografica (utile per ricerche locali) -->
+  <meta name="geo.region" content="IT-{{sigla regione, es. LOM}}">
+  <meta name="geo.placename" content="{{Città}}">
+
+  <!-- Open Graph: come appare quando il link viene condiviso (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{Nome Studio}} - Studio di Psicologia a {{Città}}">
+  <meta property="og:description" content="Percorsi di supporto psicologico individuali, di coppia e familiari con {{Titolare}} e collaboratrici.">
+  <meta property="og:image" content="https://www.tuodominio.it/img/studio-cover.jpg">
+  <meta property="og:url" content="https://www.tuodominio.it/">
+  <meta property="og:locale" content="it_IT">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico">
+
+  <!-- ============================================================
+       DATI STRUTTURATI: attività professionale sanitaria
+       Per uno studio di psicologia il tipo più adatto è
+       "MedicalBusiness" con specialità "Psychologist", oppure
+       in alcuni casi "ProfessionalService". Uso MedicalBusiness
+       perché è il più riconosciuto da Google per studi sanitari.
+       ============================================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "{{Nome Studio}}",
+    "image": "https://www.tuodominio.it/img/studio-cover.jpg",
+    "url": "https://www.tuodominio.it/",
+    "telephone": "+39{{numero}}",
+    "email": "{{email@dominio.it}}",
+    "priceRange": "€€",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{Via e numero civico}}",
+      "addressLocality": "{{Città}}",
+      "addressRegion": "{{Provincia}}",
+      "postalCode": "{{CAP}}",
+      "addressCountry": "IT"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": {{latitudine}},
+      "longitude": {{longitudine}}
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      }
+    ],
+    "medicalSpecialty": "Psychiatric",
+    "founder": {
+      "@type": "Person",
+      "name": "{{Nome e Cognome Titolare}}",
+      "jobTitle": "Psicologa Psicoterapeuta - Titolare"
+    },
+    "employee": [
+      {
+        "@type": "Person",
+        "name": "{{Nome Collaboratrice 1}}",
+        "jobTitle": "Psicologa"
+      },
+      {
+        "@type": "Person",
+        "name": "{{Nome Collaboratrice 2}}",
+        "jobTitle": "Psicologa"
+      }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/{{profilo}}/",
+      "https://www.facebook.com/{{profilo}}/",
+      "https://www.linkedin.com/company/{{profilo}}/"
+    ]
+  }
+  </script>
+</head>
