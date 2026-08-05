@@ -46,9 +46,9 @@
   --primary: #411f25;          
   --secondary: #d05f81;  
   --tertiary: #f7cad5;     
-  --primary-dark: #7a4350;
+  --primary-dark: rgb(65, 31, 37, 0.4);
   --primary-light: #b98a97;
-  --secondary-soft: #fbf1d8;
+  --secondary-soft: rgb(245, 202, 212, 0.8);
   --text-dark: #3a2a2e;
   --text-body: rgba(58, 42, 46, 0.8);   /* textDark.withOpacity(0.8) */
 
@@ -71,7 +71,7 @@
 
   /* ---------- Layout (pageHorizontalPadding / gridColumns) ---------- */
   --hpad: 80px;
-  --grid-cols: 4;
+  --grid-cols: 2;
   --team-ratio: 0.72;      /* cardAspectRatio(4, single: 1.05) */
   --therapy-ratio: 0.59;   /* cardAspectRatio(4, single: 0.92) */
   --display-size: 40px;
@@ -80,7 +80,7 @@
 /* Breakpoints.desktop = 1280 */
 @media (max-width: 1279.98px) {
   :root {
-    --grid-cols: 3;
+    --grid-cols: 2;
     --team-ratio: 0.77;
     --therapy-ratio: 0.64;
   }
@@ -834,6 +834,13 @@ button {
   margin-top: 40px;
 }
 
+.grid-aree-intervento {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  gap: 28px;
+  margin-top: 40px;
+}
+
 /* ---------- Card team (_TeamCard) ---------- */
 .team-card {
   aspect-ratio: var(--team-ratio);
@@ -1239,13 +1246,14 @@ button {
 }
 
 .feature__icon {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto 16px;
   border-radius: 999px;
   background: var(--secondary-soft);
   display: grid;
   place-items: center;
+  align-items: center;
 }
 
 .feature__icon .icon {
