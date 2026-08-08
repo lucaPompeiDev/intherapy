@@ -944,8 +944,24 @@ button {
 
 .ig-grid {
   display: grid;
-  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  /* Post Instagram — layout auto-adattivo.
+     - ogni tile ha una grandezza MASSIMA di 260px
+     - fino a 4 per riga quando c'è spazio (il max-width limita a 4 colonne)
+     - al restringersi passano da soli a 3, poi 2 (auto-fit)
+     - min(100%, 240px) evita traboccamenti su schermi strettissimi
+     - i tile restano centrati quando l'ultima riga è incompleta */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 260px));
+  justify-content: center;
   gap: 20px;
+  max-width: 1100px;          /* 4×260 + 3×20 → non più di 4 colonne */
+  margin-inline: auto;
+}
+/* Sotto i 600px: una sola colonna a tutta larghezza (il "1" finale),
+   così si evita un singolo tile da 260px centrato con margini larghi. */
+@media (max-width: 599.98px) {
+  .ig-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ig-card {
@@ -1369,6 +1385,9 @@ button {
   display: flex;
   flex-direction: column;
   padding: 26px 24px;
+  /* Card recensione: niente ombra, bordo nel colore secondario. */
+  box-shadow: none;
+  border: 2px solid var(--secondary);
 }
 
 /* Fila di stelline. Le stelle "piene" usano --secondary (giallo),
@@ -1429,6 +1448,104 @@ button {
   }
 }
 
+.reviews-carousel {
+  position: relative;
+  max-width: 680px;
+  margin: 40px auto 0;
+}
+
+.reviews-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border-radius: var(--r-lg);
+  outline: none;
+}
+.reviews-track::-webkit-scrollbar { display: none; }
+
+.reviews-track:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.reviews-track .review {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+}
+
+/* Titolo che sostituisce le stelle. */
+.review__title {
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.carousel-btn {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--primary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease),
+    opacity var(--dur-ui) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.carousel-btn .icon {
+  font-size: 22px;
+  color: var(--white);
+}
+
+.carousel-btn--prev .icon {
+  transform: scaleX(-1);
+}
+
+@media (hover: hover) {
+  .carousel-btn:not(:disabled):hover {
+    background: var(--primary-dark);
+  }
+}
+
+.carousel-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--primary-light);
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease),
+    transform var(--dur-ui) var(--ease);
+}
+
+.carousel-dot.is-active {
+  background: var(--primary);
+  transform: scale(1.35);
+}
 /* ============================================================
    Pagine di dettaglio terapia + presentazione in evidenza
    (usate in "Chi e dove siamo" per la Dott.ssa Colantoni e
