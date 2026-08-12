@@ -185,6 +185,29 @@ button {
   margin: 0;
 }
 
+.title-mg {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-top: 20px;
+}
+
+.caption-sm-italic {
+  font-size: 14px;
+  font-style: italic;
+  text-decoration: underline;
+  margin-bottom: 15px;
+}
+
+.caption-sm-bold-italic {
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
+  text-decoration: underline;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .body-md {
   font-size: 17px;
   font-weight: 500;
