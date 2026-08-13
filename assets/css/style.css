@@ -1589,9 +1589,9 @@ button {
   max-width: 380px;
 }
 
-.feature-hero__media .photo {
+/* .feature-hero__media .photo {
   aspect-ratio: 1;
-}
+} */
 
 .feature-hero__text {
   flex: 6;
