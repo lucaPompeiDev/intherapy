@@ -331,6 +331,12 @@ button {
   color: var(--white);
 }
 
+.pill--secondary {
+  background: var(--secondary);
+  color: var(--black);
+  margin-top: 15px;
+}
+
 /* Cornice colorata attorno alla foto (padding = borderWidth) */
 .photo {
   background: var(--secondary);
@@ -894,7 +900,6 @@ button {
   margin-top: 10px;
   font-size: 13px;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1569,6 +1574,60 @@ button {
   background: var(--primary);
   transform: scale(1.35);
 }
+
+/* =============================================================================
+   Carosello recensioni — comandi su mobile
+   Con 20+ recensioni la fila di puntini era più larga del telefono e spingeva
+   le frecce fuori dallo schermo. Su mobile ne restano visibili 5 attorno a
+   quello attivo (i due esterni rimpiccioliti, così si capisce che la fila
+   continua); le frecce restano sempre al loro posto.
+   ============================================================================= */
+@media (max-width: 699.98px) {
+
+  .reviews-carousel { max-width: 100%; }
+
+  .carousel-controls {
+    gap: 12px;
+    /* Le frecce non si comprimono mai: lo spazio lo cede la fila di puntini. */
+    flex-wrap: nowrap;
+  }
+
+  .carousel-btn {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;          /* area di tocco piena, 48px è il minimo comodo */
+  }
+
+  .carousel-dots {
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 10px;
+    /* Rete di sicurezza: se il JS qui sotto non gira, i puntini vanno a capo
+       invece di spingere fuori le frecce. */
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .carousel-dot { flex: 0 0 auto; }
+
+  /* Stati applicati dal JS */
+  .carousel-dot.is-hidden { display: none; }
+
+  .carousel-dot.is-edge {
+    transform: scale(.6);
+    opacity: .5;
+  }
+
+  .carousel-dot.is-edge.is-active {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+/* Bonus: le schede prendevano tutte l'altezza della recensione più lunga,
+   quindi quelle brevi mostravano il bordo con dentro mezzo schermo vuoto
+   (si vede bene nello screenshot). Così ogni scheda finisce dov'è il testo. */
+.reviews-track { align-items: flex-start; }
 /* ============================================================
    Pagine di dettaglio terapia + presentazione in evidenza
    (usate in "Chi e dove siamo" per la Dott.ssa Colantoni e
@@ -1674,6 +1733,61 @@ button {
   top: 8px;
   width: 10px;
   height: 10px;
+  border-radius: 999px;
+  background: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(153, 85, 101, 0.15);
+}
+
+/* ---------- Corpo di approfondimento (card persona chi siamo) ---------- */
+
+.prose_mini {
+  max-width: 360px;
+  margin: 40px auto 0;
+}
+
+.prose__mini__block + .prose__mini__block {
+  margin-top: 28px;
+}
+
+.prose__mini__h {
+  margin-bottom: 8px;
+}
+
+.prose__mini__p {
+  color: var(--text-body);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.prose__mini__p + .prose__mini__p {
+  margin-top: 10px;
+}
+
+/* Lista puntata con pallino colorato (in-brand). */
+.prose__mini__list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.prose__mini__list li {
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 10px;
+  color: var(--text-body);
+  font-size: 12px;
+  line-height: 1.2;
+  align-content: start;
+  text-align: start;
+}
+
+.prose__mini__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 8px;
+  height: 8px;
   border-radius: 999px;
   background: var(--secondary);
   box-shadow: 0 0 0 3px rgba(153, 85, 101, 0.15);
@@ -1974,3 +2088,355 @@ a.contact-row {
   color: var(--primary);
   margin-bottom: 8px;
 }
+/* ============================================================
+   Card informative con pill (es. "Quando rivolgerti a lei" /
+   "Formazione"). Due varianti a colori invertiti.
+   I sotto-elementi sono <li> (container, non bottoni).
+   ============================================================ */
+
+/* Griglia opzionale: due card affiancate, impilate su mobile. */
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 767.98px) {
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-card {
+  border-radius: var(--r-xl);
+  padding: 40px 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.info-card__title {
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0 0 28px;
+  font-size: clamp(30px, 5vw, 50px);   /* titolone responsive */
+}
+
+.info-card__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* La "pillola": container arrotondato, testo centrato. */
+.info-pill {
+  border-radius: 999px;
+  padding: 16px 26px;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.25;
+  font-size: clamp(15px, 2.4vw, 18px);
+}
+
+/* --- Variante SCURA (Quando rivolgerti a lei) --- */
+.info-card--dark { background: var(--primary); }
+.info-card--dark .info-card__title { color: var(--secondary-soft); }
+.info-card--dark .info-pill {
+  background: var(--secondary-soft);
+  color: var(--primary);
+}
+
+/* --- Variante CHIARA (Formazione) --- */
+.info-card--light { background: var(--secondary-soft); }
+.info-card--light .info-card__title { color: var(--primary); }
+.info-card--light .info-pill {
+  background: var(--primary);
+  color: var(--secondary-soft);
+}
+/* =============================================================================
+   ▓▓▓ RESTYLING — posizionamento e finiture ▓▓▓
+   Va in fondo al file: diverse regole qui correggono valori scritti sopra
+   e contano sull'ordine di cascata.
+   ============================================================================= */
+
+:root {
+  --black: #1b1114;                 /* mancava: .pill--secondary lo usava a vuoto */
+  --surface: #fdf8f9;               /* fondo tenue per i blocchi "quieti" */
+  --hairline: rgba(65, 31, 37, 0.10);
+  --page-max: 1200px;               /* misura di lettura su schermi grandi */
+
+  /* Ombra a due livelli: una vicina che stacca il bordo, una lontana e
+     morbida che dà profondità. Meno "adesivo" della singola ombra. */
+  --shadow-soft: 0 1px 2px rgba(65, 31, 37, .05), 0 14px 30px rgba(65, 31, 37, .07);
+  --shadow-lift: 0 2px 6px rgba(65, 31, 37, .07), 0 26px 50px rgba(65, 31, 37, .14);
+}
+
+/* --- Correzioni ------------------------------------------------------------ */
+.pill { font-size: 15px; letter-spacing: .01em; }        /* era "18x": scartata */
+.pill--secondary { margin-top: 0; background: var(--tertiary); color: var(--primary); }
+
+/* Pillole affiancate invece che impilate dal margin-top. */
+.pill-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* --- Misura della pagina --------------------------------------------------- */
+/* Il testo arrivava a righe di 1700px su desktop. */
+.page,
+.topbar {
+  width: 100%;
+  max-width: calc(var(--page-max) + var(--hpad) * 2);
+  margin-inline: auto;
+}
+
+.page { padding-top: 40px; padding-bottom: 8px; }
+
+.footer__grid,
+.footer__bottom {
+  max-width: var(--page-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Navbar agganciata in alto: su una pagina lunga come questa serve. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(255, 255, 255, .88);
+  backdrop-filter: saturate(1.4) blur(8px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Le ancore (#curriculum, #dove-siamo) non finiscono sotto la navbar. */
+[id] { scroll-margin-top: 90px; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* --- Intestazioni di sezione ----------------------------------------------- */
+.section-head__title { margin: 16px 0 0; letter-spacing: -.015em; }
+
+/* Trattino colorato: dice "qui inizia una sezione" senza aggiungere testo.
+   È l'unico elemento decorativo ricorrente. */
+.section-head__title::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 4px;
+  margin: 16px auto 0;
+  border-radius: 999px;
+  background: var(--secondary);
+}
+
+.section-head__lead { margin-top: 16px; }
+.section-head > .pill { background: var(--tertiary); color: var(--primary); }
+
+@media (min-width: 1000px) { .section { margin-top: 88px; } }
+
+/* --- Presentazione (feature-hero) ------------------------------------------ */
+.feature-hero { gap: 56px; margin-top: 8px; }
+.feature-hero__media { max-width: 400px; }
+
+/* Ritratto verticale: la cornice resta identica qualunque foto caricherai. */
+.feature-hero__media .photo { aspect-ratio: 4 / 5; }
+
+.feature-hero__title { margin: 16px 0 18px; letter-spacing: -.02em; text-wrap: balance; }
+
+.feature-hero__text .body-md { max-width: 62ch; font-size: 16.5px; line-height: 1.65; }
+.feature-hero__text .body-md + .body-md { margin-top: 14px; }
+
+/* Frase-chiave del metodo: filetto colorato, diventa una citazione. */
+.hero-quote {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-left: 4px solid var(--secondary);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  background: var(--surface);
+  color: var(--text-dark);
+}
+
+.feature-hero__actions { margin-top: 28px; }
+
+.btn--primary {
+  box-shadow: 0 10px 22px rgba(65, 31, 37, .22);
+  transition: background-color var(--dur-ui) var(--ease),
+              transform var(--dur-ui) var(--ease),
+              box-shadow var(--dur-ui) var(--ease);
+}
+
+@media (hover: hover) {
+  .btn--primary:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(65, 31, 37, .28);
+  }
+}
+
+.btn:active { transform: translateY(0); }
+
+@media (max-width: 699.98px) {
+  .feature-hero { gap: 28px; }
+  .feature-hero__media { width: 220px; max-width: 220px; }
+  .feature-hero__text .body-md { max-width: none; }
+  .hero-quote {
+    border-left: 0;
+    border-top: 4px solid var(--secondary);
+    border-radius: 0 0 var(--r-md) var(--r-md);
+  }
+}
+
+/* --- Schede "Quando rivolgerti a lei" / "Formazione" ------------------------ */
+.section .info-cards { margin-top: 40px; }
+.info-cards { gap: 28px; }
+
+.info-card { padding: 34px 26px 30px; box-shadow: var(--shadow-soft); }
+
+/* Il titolone da 50px schiacciava le pillole: qui è proporzionato. */
+.info-card__title {
+  margin-bottom: 22px;
+  font-size: clamp(21px, 2.4vw, 27px);
+  letter-spacing: -.01em;
+}
+
+.info-card__list { gap: 12px; }
+
+.info-pill {
+  padding: 14px 22px;
+  font-size: 15px;
+  transition: transform var(--dur-ui) var(--ease);
+}
+
+@media (hover: hover) { .info-pill:hover { transform: translateY(-2px); } }
+
+/* --- Collaboratrici --------------------------------------------------------- */
+.grid { gap: 24px; }
+
+/* Tre schede in una griglia a 2 colonne lasciavano un'orfana in fondo. */
+.grid--team { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+/* Il vuoto enorme sotto il testo veniva da aspect-ratio: 0.72, che imponeva
+   un'altezza fissa. Ora l'altezza la decide il contenuto. */
+.team-card {
+  aspect-ratio: auto;
+  position: relative;
+  overflow: hidden;
+  padding: 0 22px 28px;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--dur-ui) var(--ease),
+              box-shadow var(--dur-ui) var(--ease);
+}
+
+/* Fascia sfumata dietro il ritratto: dà un "sopra" e un "sotto" alla scheda. */
+.team-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 118px;
+  background: linear-gradient(180deg, var(--tertiary), rgba(247, 202, 213, 0));
+}
+
+.team-card > * { position: relative; }
+.team-card .photo { width: 124px; height: 124px; margin-top: 30px; }
+.team-card__name { margin: 18px 0 10px; font-size: 18px; }
+.team-card__bio { flex: 0 1 auto; margin-top: 14px; font-size: 14px; line-height: 1.55; margin-left: 8px; margin-right: 8px;}
+
+@media (hover: hover) {
+  .team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+}
+
+/* --- Partner ---------------------------------------------------------------- */
+.partner {
+  gap: 18px;
+  padding: 20px;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--dur-ui) var(--ease),
+              box-shadow var(--dur-ui) var(--ease);
+}
+
+.partner .photo { width: 112px; height: 112px; }
+.partner__desc { font-size: 14px; line-height: 1.55; }
+
+@media (hover: hover) {
+  .partner:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+}
+
+/* --- Galleria dello studio -------------------------------------------------- */
+.gallery .photo img { transition: transform 450ms var(--ease); }
+@media (hover: hover) { .gallery .photo:hover img { transform: scale(1.06); } }
+
+/* --- Curriculum -------------------------------------------------------------- */
+.cv {
+  margin-top: 64px;
+  padding: 40px 34px;
+  border-radius: var(--r-xl);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-soft);
+}
+
+.cv__title { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; color: var(--primary); }
+
+/* Tre blocchi impilati → tre schede affiancate, si scorrono con l'occhio. */
+.cv__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.cv__group {
+  padding: 24px 22px;
+  border-radius: var(--r-md);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+
+.cv__group + .cv__group { margin-top: 0; }
+
+.cv__group-title {
+  margin-bottom: 12px;
+  font-size: 12.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.cv__group .prose__list { margin-top: 0; }
+.cv__group .prose__list li:last-child { margin-bottom: 0; }
+
+/* --- Dove siamo -------------------------------------------------------------- */
+.where { gap: 28px; }
+
+/* La colonna contatti diventa una scheda: stesso peso visivo della mappa,
+   invece di galleggiare sul bianco. */
+.where__info {
+  gap: 6px;
+  justify-content: center;
+  padding: 26px 22px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+
+.contact-row {
+  align-items: center;
+  padding: 12px;
+  border-radius: var(--r-md);
+  transition: background-color var(--dur-ui) var(--ease);
+}
+
+.contact-row__value { font-size: 15.5px; }
+
+@media (hover: hover) {
+  a.contact-row:hover { background: rgba(247, 202, 213, .5); }
+}
+
+.where__info .btn--whatsapp { margin-top: 14px; box-shadow: 0 10px 22px rgba(37, 211, 102, .28); }
+
+.map { min-height: 380px; border: 1px solid var(--hairline); }
+@media (max-width: 999.98px) { .map { min-height: 320px; } }
+
+/* --- Ritocchi generali -------------------------------------------------------- */
+.card { box-shadow: var(--shadow-soft); }
+.photo { box-shadow: 0 8px 18px rgba(65, 31, 37, .12); }
+.footer { margin-top: 72px; }

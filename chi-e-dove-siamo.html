@@ -190,40 +190,89 @@
 
     <main class="page">
 
-      <!-- ▓ 1. Presentazione in evidenza della Dott.ssa + pulsante curriculum ▓ -->
-      <div class="section-head">
-        <span class="pill"><svg class="icon" aria-hidden="true">
-            <use href="#i-groups"></use>
-          </svg>Chi siamo</span>
-        <h1 class="headline-md section-head__title">Le persone dello studio</h1>
-      </div>
-
+      <!-- ▓ 1 · Presentazione della Dott.ssa ▓ -->
       <section class="feature-hero">
         <div class="feature-hero__media">
           <div class="photo photo--xl">
-            <img src="assets/img/katia.svg" alt="Placeholder — ritratto della Dott.ssa Katia Colantoni" width="700"
-              height="700">
+            <img src="assets/img/katia.svg" alt="Ritratto della Dott.ssa Katia Colantoni" width="700" height="875">
           </div>
         </div>
+
         <div class="feature-hero__text">
-          <span class="pill pill--primary">Dott.ssa Katia Colantoni</span>
-          <h2 class="display-sm feature-hero__title">Psicologa e Psicoterapeuta</h2>
+          <!-- Le due pillole ora sono una riga sola (.pill-row): prima la
+               seconda scendeva sotto per via di un margin-top. -->
+          <div class="pill-row">
+            <span class="pill pill--primary">Dott.ssa Katia Colantoni</span>
+            <span class="pill pill--secondary">Fondatrice di Intherapy</span>
+          </div>
+
+          <!-- <h1>: la pagina non ne aveva nessuno. -->
+          <h1 class="display-sm feature-hero__title">Psicoterapeuta cognitivo-comportamentale</h1>
+
           <p class="body-md">
-            Testo placeholder. Breve presentazione della dottoressa: formazione,
-            approccio e ambiti di intervento. Da sostituire con la biografia reale.
+            Nel corso della sua esperienza professionale ha constatato che ogni sintomo ha una storia e una funzione
+            specifica: spesso rappresenta il modo migliore che la mente ha trovato, fino a quel momento, per
+            proteggerci.
           </p>
+          <p class="body-md">
+            Per questo considera ogni persona nella sua complessità, dove pensieri, emozioni, corpo e significati si
+            influenzano reciprocamente. Il suo lavoro non è combattere il sintomo, ma aiutarti a comprenderne il senso,
+            a scoprire cosa lo ha reso necessario e a costruire modi nuovi e più funzionali per prenderti cura di te.
+          </p>
+          <p class="body-md hero-quote">
+            Quando il sintomo non è più l’unica strategia possibile per proteggerti, perde gradualmente la sua funzione
+            e può lasciare spazio a un nuovo equilibrio.
+          </p>
+
           <div class="feature-hero__actions">
-            <!-- Pulsante richiesto: "consultare il curriculum".
-                 Rimanda alla sezione #curriculum in fondo alla pagina,
-                 così è già funzionante senza allegare un PDF esterno. -->
             <a class="btn btn--primary" href="#curriculum"><svg class="icon" aria-hidden="true">
                 <use href="#i-description"></use>
               </svg>Consulta il curriculum</a>
+            <a class="btn btn--outline" href="#dove-siamo"><svg class="icon" aria-hidden="true">
+                <use href="#i-place"></use>
+              </svg>Dove siamo</a>
           </div>
         </div>
       </section>
 
-      <!-- ▓ 2. Collaboratrici ▓ -->
+      <!-- ▓ 2 · Di cosa si occupa + Formazione ▓
+           Erano due liste nude appoggiate sul bianco, una sotto la foto e una
+           spostata a destra. Ora sono le due schede a colori invertiti
+           (.info-card--dark / --light) già previste dallo stylesheet. -->
+      <section class="section">
+        <div class="section-head">
+          <span class="pill"><svg class="icon" aria-hidden="true">
+              <use href="#i-psychology"></use>
+            </svg>Il suo lavoro</span>
+          <h2 class="headline-md section-head__title">Di cosa si occupa</h2>
+        </div>
+
+        <div class="info-cards">
+          <article class="info-card info-card--dark">
+            <h3 class="info-card__title">Quando rivolgerti a lei</h3>
+            <ul class="info-card__list">
+              <li class="info-pill">Disturbi d'ansia e attacchi di panico</li>
+              <li class="info-pill">Disturbi dell'umore</li>
+              <li class="info-pill">Difficoltà nella gestione delle emozioni</li>
+              <li class="info-pill">Difficoltà relazionali e affettive</li>
+              <li class="info-pill">Eventi traumatici e stressanti</li>
+              <li class="info-pill">Cambiamenti e fasi di transizione della vita</li>
+            </ul>
+          </article>
+
+          <article class="info-card info-card--light">
+            <h3 class="info-card__title">Formazione</h3>
+            <ul class="info-card__list">
+              <li class="info-pill">Psicoterapeuta cognitivo-comportamentale</li>
+              <li class="info-pill">Terapeuta EMDR dell'età evolutiva ed adulta</li>
+              <li class="info-pill">Perfezionata in Neuropsicologia Clinica</li>
+              <li class="info-pill">Formata in Neurofeedback, Flash Technique e Sandtray Therapy</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- ▓ 3 · Collaboratrici ▓ -->
       <section class="section">
         <div class="section-head">
           <span class="pill"><svg class="icon" aria-hidden="true">
@@ -231,13 +280,36 @@
             </svg>Collaboratrici</span>
           <h2 class="headline-md section-head__title">Chi lavora con noi</h2>
         </div>
-        <div class="grid">
+
+        <!-- grid--team: colonne automatiche, così tre schede stanno su tre
+             colonne invece di 2 + 1 orfana. -->
+        <div class="grid grid--team">
           <article class="card team-card">
             <div class="photo photo--circle"><img src="assets/img/collaboratrice-1.svg"
                 alt="Placeholder — collaboratrice" width="300" height="300" loading="lazy"></div>
-            <h3 class="title-lg team-card__name">Dott.ssa Nome Cognome</h3>
-            <span class="pill pill--primary">Psicologa</span>
-            <p class="body-md team-card__bio">Placeholder — breve biografia e ambito di specializzazione.</p>
+            <h3 class="title-lg team-card__name">Dott.ssa Marika Trancucci</h3>
+            <span class="pill pill--primary">Psicoterapeuta ad approccio integrato</span>
+            <p class="body-md team-card__bio">il suo lavoro non parte da una diagnosi, ma da una domanda: <strong> qual
+                è la tua storia?</strong>
+
+              Perché ogni disagio ha un’origine, ogni sintomo un significato, e ogni persona porta dentro di sé le
+              tracce di ciò che ha vissuto: nell’infanzia, nelle relazioni, in ciò che è rimasto in ombra.
+
+              In terapia non troverai etichette, ma un luogo sicuro e privo di giudizio in cui potersi ascoltare con
+              autenticità, fare luce su ciò che è nascosto e ritrovare il proprio senso di sé.</p>
+            <br/>
+            <div class="prose__mini__block">
+              <h2 class="title-lg prose__mini__h">Quando rivolgerti a lei</h2>
+              <p class="prose__mini__p">
+              <ul class="prose__mini__list">
+                <li>Ansia, attacchi di panico e somatizzazioni</li>
+                <li>Disturbi dell'umore</li>
+                <li>Disgregolazioni emotive</li>
+                <li>Genitorialità e famiglie</li>
+                <li>Identità, relazioni e crescita personale</li>
+              </ul>
+              </p>
+            </div>
           </article>
           <article class="card team-card">
             <div class="photo photo--circle"><img src="assets/img/collaboratrice-2.svg"
@@ -256,16 +328,15 @@
         </div>
       </section>
 
-      <!-- ▓ 3. Partner e visite specialistiche ▓ -->
+      <!-- ▓ 4 · Partner e visite specialistiche ▓ -->
       <section class="section">
         <div class="section-head">
           <span class="pill"><svg class="icon" aria-hidden="true">
               <use href="#i-verified"></use>
-            </svg>Partner e visite specialistiche</span>
+            </svg>Partner</span>
           <h2 class="headline-md section-head__title">Una rete di specialisti</h2>
           <p class="body-md section-head__lead">
-            Collaboriamo con professionisti esterni per offrire visite e consulenze
-            specialistiche. <!-- PLACEHOLDER: elencare i partner reali. -->
+            Collaboriamo con professionisti esterni per offrire visite e consulenze specialistiche.
           </p>
         </div>
         <div class="partners">
@@ -289,7 +360,7 @@
         </div>
       </section>
 
-      <!-- ▓ 4. Foto dello studio ▓ -->
+      <!-- ▓ 5 · Foto dello studio ▓ -->
       <section class="section">
         <div class="section-head">
           <span class="pill"><svg class="icon" aria-hidden="true">
@@ -307,7 +378,38 @@
         </div>
       </section>
 
-      <!-- ▓ 5. Dove siamo: mappa + contatti + WhatsApp ▓ -->
+      <!-- ▓ 6 · Curriculum ▓
+           Spostato PRIMA di "Dove siamo": il curriculum appartiene alla parte
+           su di lei, e la pagina si chiude sui contatti, che è l'azione utile. -->
+      <section class="cv" id="curriculum">
+        <h2 class="headline-md cv__title"><svg class="icon" aria-hidden="true">
+            <use href="#i-description"></use>
+          </svg>Curriculum — Dott.ssa Katia Colantoni</h2>
+
+        <div class="cv__groups">
+          <div class="cv__group">
+            <div class="cv__group-title">Formazione</div>
+            <ul class="prose__list">
+              <li>Placeholder — laurea in Psicologia, università e anno.</li>
+              <li>Placeholder — specializzazione in Psicoterapia.</li>
+              <li>Placeholder — formazione EMDR e altri percorsi.</li>
+            </ul>
+          </div>
+          <div class="cv__group">
+            <div class="cv__group-title">Esperienza</div>
+            <ul class="prose__list">
+              <li>Placeholder — esperienze professionali principali.</li>
+              <li>Placeholder — collaborazioni e ambiti clinici.</li>
+            </ul>
+          </div>
+          <div class="cv__group">
+            <div class="cv__group-title">Iscrizione all'albo</div>
+            <p class="prose__p">Placeholder — Ordine degli Psicologi, regione e numero di iscrizione.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ▓ 7 · Dove siamo: contatti + mappa ▓ -->
       <section class="section" id="dove-siamo">
         <div class="section-head">
           <span class="pill"><svg class="icon" aria-hidden="true">
@@ -317,7 +419,6 @@
         </div>
 
         <div class="where">
-          <!-- Colonna contatti -->
           <div class="where__info">
             <div class="contact-row">
               <div class="contact-row__icon"><svg class="icon" aria-hidden="true">
@@ -347,7 +448,7 @@
               </div>
             </a>
             <a class="btn btn--whatsapp" href="https://wa.me/message/WDTUO3AL5MNND1" target="_blank"
-              rel="noopener noreferrer" style="margin-top:6px">
+              rel="noopener noreferrer">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
                 <path
                   d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232">
@@ -356,136 +457,99 @@
             </a>
           </div>
 
-          <!-- Colonna mappa: caricamento su clic (privacy-friendly).
-               La mappa Google parte solo dopo il clic dell'utente:
-               di default nessuna richiesta a Google. Vedi assets/js/map.js. -->
-          <!-- <div class="map" id="map" data-map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2952.902732679396!2d12.685003577433472!3d42.259249671202596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f0ee7e6fbb7f1%3A0x973da9ca197ae74b!2sIntherapy%20Studio%20Colantoni!5e0!3m2!1sit!2sit!4v1784266900734!5m2!1sit!2sit"> -->
-          <!-- <button type="button" class="map__placeholder" id="map-load">
-              <svg class="icon" aria-hidden="true"><use href="#i-place"></use></svg>
-              <span class="title-lg">Mostra la mappa</span>
-              <span class="map__hint">
-                Cliccando carichi la mappa da Google Maps. Google potrà registrare
-                il tuo indirizzo IP secondo la propria informativa.
-              </span>
-            </button> -->
           <div class="map">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3045.1809430756334!2d12.685003576207567!3d42.25924967120246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f0ee7e6fbb7f1%3A0x973da9ca197ae74b!2sIntherapy%20Studio%20Colantoni!5e1!3m2!1sit!2sit!4v1785751491760!5m2!1sit!2sit"
-              width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+              title="Mappa — Intherapy Studio Colantoni, Via Ferruti 60, Poggio Mirteto" width="600" height="450"
+              style="border:0;" allowfullscreen="" loading="lazy"
               referrerpolicy="strict-origin-when-cross-origin"></iframe>
           </div>
         </div>
-  </div>
-  </section>
+      </section>
 
-  <!-- ▓ Sezione Curriculum (aperta dal pulsante sopra) ▓ -->
-  <section class="cv" id="curriculum">
-    <h2 class="headline-md cv__title"><svg class="icon" aria-hidden="true">
-        <use href="#i-description"></use>
-      </svg> Curriculum — Dott.ssa Katia Colantoni</h2>
-    <div class="cv__group">
-      <div class="cv__group-title">Formazione</div>
-      <ul class="prose__list">
-        <li>Placeholder — laurea in Psicologia, università e anno.</li>
-        <li>Placeholder — specializzazione in Psicoterapia.</li>
-        <li>Placeholder — formazione EMDR e altri percorsi.</li>
-      </ul>
-    </div>
-    <div class="cv__group">
-      <div class="cv__group-title">Esperienza</div>
-      <ul class="prose__list">
-        <li>Placeholder — esperienze professionali principali.</li>
-        <li>Placeholder — collaborazioni e ambiti clinici.</li>
-      </ul>
-    </div>
-    <div class="cv__group">
-      <div class="cv__group-title">Iscrizione all'albo</div>
-      <p class="prose__p">Placeholder — Ordine degli Psicologi, regione e numero di iscrizione.</p>
-    </div>
-  </section>
+    </main>
 
-  </main>
+    <!-- ═══════════ Footer (su tutte le pagine) ═══════════ -->
+    <footer class="footer">
+      <div class="footer__grid">
 
-  <!-- ═══════════ Footer (su tutte le pagine) ═══════════ -->
-  <footer class="footer">
-    <div class="footer__grid">
-
-      <!-- Colonna 1: brand -->
-      <div class="footer__brand">
-        <svg class="icon" aria-hidden="true">
-          <use href="#i-spa"></use>
-        </svg>
-        <span class="footer__name">Intherapy Studio Colantoni</span>
-      </div>
-
-      <!-- Colonna 2: contatti (telefono, indirizzo, email) -->
-      <div>
-        <p class="footer__col-title">Contatti</p>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="tel:+393491672298"><svg class="icon" aria-hidden="true">
-                <use href="#i-call"></use>
-              </svg><span>+39 349 167 2298</span></a></li>
-          <li><a class="footer_link"
-              href="https://www.google.com/maps/place/Intherapy+Studio+Colantoni/@42.2591902,12.6850825,699m/data=!3m1!1e3!4m6!3m5!1s0x132f0ee7e6fbb7f1:0x973da9ca197ae74b!8m2!3d42.2592497!4d12.6875785!16s%2Fg%2F11h6nntkn4!5m2!1e2!1e4?authuser=0&entry=ttu&g_ep=EgoyMDI2MDgwNS4xIKXMDSoASAFQAw%3D%3D"
-              target="_blank" rel="noopener noreferrer"><span class="footer__link"><svg class="icon" aria-hidden="true">
-                  <use href="#i-place"></use>
-                </svg><span>Via Ferruti, 60<br>02047 Poggio Mirteto (RI)</span></span></a></li>
-          <li><a class="footer__link" href="mailto:info@studiocolantoni.it"><svg class="icon" aria-hidden="true">
-                <use href="#i-mail"></use>
-              </svg><span>info@studiocolantoni.it</span></a></li>
-        </ul>
-      </div>
-
-      <!-- Colonna 3: link rapidi alle 3 sezioni principali -->
-      <div>
-        <p class="footer__col-title">Sezioni</p>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="index.html"><svg class="icon" aria-hidden="true">
-                <use href="#i-arrow_forward"></use>
-              </svg><span>Home</span></a></li>
-          <li><a class="footer__link" href="terapie.html"><svg class="icon" aria-hidden="true">
-                <use href="#i-arrow_forward"></use>
-              </svg><span>Terapie</span></a></li>
-          <li><a class="footer__link" href="chi-e-dove-siamo.html"><svg class="icon" aria-hidden="true">
-                <use href="#i-arrow_forward"></use>
-              </svg><span>Chi e dove siamo</span></a></li>
-        </ul>
-      </div>
-
-      <!-- Colonna 4: social -->
-      <div>
-        <p class="footer__col-title">Seguici</p>
-        <div class="footer__social">
-          <a href="https://www.instagram.com/intherapy.studiocolantoni" target="_blank" rel="noopener noreferrer"
-            aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
-              <path
-                d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334">
-              </path>
-            </svg></a>
-          <a href="https://www.facebook.com/dott.ssakatiacolantonipsicologa" target="_blank" rel="noopener noreferrer"
-            aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
-              <path
-                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951">
-              </path>
-            </svg></a>
-          <a href="https://wa.me/message/WDTUO3AL5MNND1" target="_blank" rel="noopener noreferrer"
-            aria-label="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
-              <path
-                d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232">
-              </path>
-            </svg></a>
+        <!-- Colonna 1: brand -->
+        <div class="footer__brand">
+          <svg class="icon" aria-hidden="true">
+            <use href="#i-spa"></use>
+          </svg>
+          <span class="footer__name">Intherapy Studio Colantoni</span>
         </div>
+
+        <!-- Colonna 2: contatti (telefono, indirizzo, email) -->
+        <div>
+          <p class="footer__col-title">Contatti</p>
+          <ul class="footer__list">
+            <li><a class="footer__link" href="tel:+393491672298"><svg class="icon" aria-hidden="true">
+                  <use href="#i-call"></use>
+                </svg><span>+39 349 167 2298</span></a></li>
+            <li><a class="footer_link"
+                href="https://www.google.com/maps/place/Intherapy+Studio+Colantoni/@42.2591902,12.6850825,699m/data=!3m1!1e3!4m6!3m5!1s0x132f0ee7e6fbb7f1:0x973da9ca197ae74b!8m2!3d42.2592497!4d12.6875785!16s%2Fg%2F11h6nntkn4!5m2!1e2!1e4?authuser=0&entry=ttu&g_ep=EgoyMDI2MDgwNS4xIKXMDSoASAFQAw%3D%3D"
+                target="_blank" rel="noopener noreferrer"><span class="footer__link"><svg class="icon"
+                    aria-hidden="true">
+                    <use href="#i-place"></use>
+                  </svg><span>Via Ferruti, 60<br>02047 Poggio Mirteto (RI)</span></span></a></li>
+            <li><a class="footer__link" href="mailto:info@studiocolantoni.it"><svg class="icon" aria-hidden="true">
+                  <use href="#i-mail"></use>
+                </svg><span>info@studiocolantoni.it</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Colonna 3: link rapidi alle 3 sezioni principali -->
+        <div>
+          <p class="footer__col-title">Sezioni</p>
+          <ul class="footer__list">
+            <li><a class="footer__link" href="index.html"><svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow_forward"></use>
+                </svg><span>Home</span></a></li>
+            <li><a class="footer__link" href="terapie.html"><svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow_forward"></use>
+                </svg><span>Terapie</span></a></li>
+            <li><a class="footer__link" href="chi-e-dove-siamo.html"><svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow_forward"></use>
+                </svg><span>Chi e dove siamo</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Colonna 4: social -->
+        <div>
+          <p class="footer__col-title">Seguici</p>
+          <div class="footer__social">
+            <a href="https://www.instagram.com/intherapy.studiocolantoni" target="_blank" rel="noopener noreferrer"
+              aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+                <path
+                  d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334">
+                </path>
+              </svg></a>
+            <a href="https://www.facebook.com/dott.ssakatiacolantonipsicologa" target="_blank" rel="noopener noreferrer"
+              aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+                <path
+                  d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951">
+                </path>
+              </svg></a>
+            <a href="https://wa.me/message/WDTUO3AL5MNND1" target="_blank" rel="noopener noreferrer"
+              aria-label="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+                <path
+                  d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232">
+                </path>
+              </svg></a>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-
-    <div class="footer__bottom">
-      <p class="footer__copy">© 2026 Intherapy Studio Colantoni. Tutti i diritti riservati.</p>
-      <nav class="footer__legal" aria-label="Note legali">
-        <a href="privacy.html">Privacy policy</a>
-      </nav>
-    </div>
-  </footer>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 Intherapy Studio Colantoni. Tutti i diritti riservati.</p>
+        <nav class="footer__legal" aria-label="Note legali">
+          <a href="privacy.html">Privacy policy</a>
+        </nav>
+      </div>
+    </footer>
 
   </div>
 
