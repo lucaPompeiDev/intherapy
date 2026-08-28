@@ -353,6 +353,12 @@ button {
   overflow: hidden;
 }
 
+.photo picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .photo img {
   width: 100%;
   height: 100%;
@@ -392,7 +398,7 @@ button {
   aspect-ratio: 1;    
   border-radius: 999px;      /* niente ovali con immagini rettangolari */
   object-fit: cover;
-  object-position: center;  /* ritaglio preso dal centro */
+  object-position: top;  /* ritaglio preso dal centro */
   display: block;
 }
 
@@ -1867,6 +1873,7 @@ button {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-top: 40px;
+  justify-content: center;
 }
 
 .gallery .photo {
